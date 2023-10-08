@@ -28,3 +28,19 @@ where <EPOCH_TIME> is an integer representing the current epoch time in seconds
 ## Undeployment
 
 Run `make destroy` which runs `terraform destroy` for you
+
+## Github actions
+
+Github actions exist in this repo to lint and provide an alternative repository for pulling the container.
+For my user this would be `docker pull ghcr.io/jesse-osiecki/go-api-endpoint:main` where `main` is the branch.
+
+
+## Arch
+
+This deployment is minimal and should remain in AWS free tier with reasonable use cases.
+
+```mermaid
+graph TD;
+    User-->API Gateway;
+    API Gateway-->Lambda;
+```
