@@ -27,7 +27,8 @@ resource "null_resource" "lambda_image" {
 }
 
 resource "aws_ecr_repository" "lambda_repo" {
-  name = var.lambda_name
+  name         = var.lambda_name
+  force_delete = true
 }
 
 output "ecr_url" {
