@@ -40,7 +40,9 @@ For my user this would be `docker pull ghcr.io/jesse-osiecki/go-api-endpoint:mai
 This deployment is minimal and should remain in AWS free tier with reasonable use cases.
 
 ```mermaid
-graph TD;
-    User-->API Gateway;
-    API Gateway-->Lambda;
+graph LR;
+User-->API_Gateway;
+API_Gateway-->Lambda;
 ```
+
+Where Lambda executes our container runtime
