@@ -1,25 +1,23 @@
 package main
 
 import (
-	"flag"
+	"context"
 	"fmt"
-	"log"
-	"net/http"
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 	"time"
 )
 
 func main() {
-	var hostport string
-
-	flag.StringVar(&hostport, "h", ":8080", "Specify <host>:<port> leaving the host blank for all")
-	flag.Parse()
-
-	http.HandleFunc("/", getEpoch)
-	log.Fatal(http.ListenAndServe(hostport, nil))
+	lambda.Start(getEpoch)
 }
 
-func getEpoch(w http.ResponseWriter, r *http.Request) {
+func getEpoch(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	now := time.Now().UTC()
 	fmt.Printf("Now it is: %d\n", now.Unix())
-	fmt.Fprintf(w, "{\"The current epoch time\": %d}\n", now.Unix())
+	response := events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body:       fmt.Sprintf("{\"The current epoch time\": %d}\n", now.Unix()),
+	}
+	return response, nil
 }
